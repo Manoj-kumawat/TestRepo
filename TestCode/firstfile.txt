@@ -1,0 +1,12 @@
+    
+def main():
+    BASEDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    DICTIONARYDATAFILE = os.path.join(os.path.join(os.path.join(BASEDIR,'InputFiles'),'DictionaryData'),'data.json')
+    dict_data = load_file(DICTIONARYDATAFILE)
+    while(True):
+        word = input("Please enter a word..")
+        translate(word, dict_data)
+        condtn = input("For continue enter Y else N.")
+        if(condtn.lower().strip() == "n"):
+            break;
+    
