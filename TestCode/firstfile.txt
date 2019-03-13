@@ -1,12 +1,70 @@
     
-def main():
-    BASEDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    DICTIONARYDATAFILE = os.path.join(os.path.join(os.path.join(BASEDIR,'InputFiles'),'DictionaryData'),'data.json')
-    dict_data = load_file(DICTIONARYDATAFILE)
-    while(True):
-        word = input("Please enter a word..")
-        translate(word, dict_data)
-        condtn = input("For continue enter Y else N.")
-        if(condtn.lower().strip() == "n"):
-            break;
+public InternetAddress[] Get_To_List(String emailRec) throws AddressException {
+		String recipient = emailRec;
+		String[] recipientList = recipient.split(",");
+
+		InternetAddress[] recipientAddress = new InternetAddress[recipientList.length];
+		int counter = 0;
+		for (String iterator : recipientList) {
+			recipientAddress[counter] = new InternetAddress(iterator.trim());
+			counter++;
+		}
+		return recipientAddress;
+	}
+
+	public String Get_From(String emailSender) {
+		return emailSender;
+	}
+
+	/*private String TO_List(String program_name, String emailRec) {
+		if (System.getenv("BUILD_NUMBER") != null) {
+			if (program_name.toUpperCase().contains("One-Network_DWDM")) {
+				return emailRec;
+			}
+			return emailRec;
+		}
+		System.out.println("Build number is null .. Tests might ran in local :" + program_name);
+		return emailRec;
+	}*/
+
+	public String Get_Email_Body_IpAddress(String program_name, List<String> headers, Map<String, List<String>> rowData, String bodyContent) {
+		Map<String, List<String>> Extent_Map = rowData;
+		StringBuffer htmlMailBody = new StringBuffer("<h4><br>" + bodyContent + "</h4>\n");
+
+		Iterator<String> it = Extent_Map.keySet().iterator();
+	//	htmlMailBody.append("<br>");
+		String myvar = "<head><style>table {width:50%;}table {width:50%;}\ntable {width:50%;}table {width:50%;}\n      table {\n      border: 1px solid black;\n      font-family: arial, sans-serif;\n      border-collapse: collapse;\n      padding: 8px;\n      }\n      td, th {\n      border: 1px solid #dddddd;\n      text-align: left;\n      padding: 8px;\n      }\n\t  th {\n    background: #BDBDBD;\n}\n tr {\n    background: #FAFAFA;\n}\ntable tbody {\n    font-family: calibri;\nfont-size: 18px;\n}</style></head><body><table><tr>";
+
+		htmlMailBody.append(myvar);
+		for (String header : headers) {
+			htmlMailBody.append("<th><b>" + header + "<b></th>");
+		}
+		htmlMailBody.append("</tr>");
+
+		while (it.hasNext()) {
+			htmlMailBody.append("<tr >");
+			String testname = (String) it.next();
+			List<String> testResults = Extent_Map.get(testname);
+
+			Iterator<String> iter = testResults.iterator();
+			while (iter.hasNext()) {
+				htmlMailBody.append("<td>  " + (String) iter.next() + " </td>");
+			}
+			htmlMailBody.append("</tr>");
+		}
+		htmlMailBody.append("</table>");
+		htmlMailBody.append("<br>");
+
+		htmlMailBody.append("<h4>Thanks !!</h4>");
+		htmlMailBody.append("</body>");
+	//	System.out.println("---------------------");
+	//	System.out.println(htmlMailBody.toString());
+	//	System.out.println("---------------------");
+		return htmlMailBody.toString();
+	}
+
+	public String Get_Email_Subject(String program_name, String Environment) {
+	//	String Subject_Text = program_name;
+		return program_name;
+	}
     
